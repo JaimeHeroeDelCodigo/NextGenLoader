@@ -12,5 +12,6 @@
   </padding>
 
   <Label fx:id="welcomeText"/>
-  <Button text="Hello!" onAction="#onHelloButtonClick"/>
+  <Button text="Load new configuration" onAction="#onHelloButtonClick"/>
+  <Button text="Continue existing loading" />
 </VBox>
