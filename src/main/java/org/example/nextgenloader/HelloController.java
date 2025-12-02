@@ -10,11 +10,11 @@ public class HelloController {
     private Label welcomeText;
 
     @FXML
-    protected void openFileExplorerClick()() {
+    protected void openFileExplorerClick() {
 
 
 
-        FileChooser fileChooser = new FileChooser();
+
         welcomeText.setText("New loading started");
         
 

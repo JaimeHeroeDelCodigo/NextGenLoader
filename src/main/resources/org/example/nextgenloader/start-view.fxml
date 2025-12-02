@@ -27,6 +27,6 @@
   </ImageView>
 
   <Label fx:id="welcomeText"/>
-  <Button text="Load new configuration" onAction="#openFileExplorerClick"/>
+  <Button fx:id="openFileButton" text="Load new configuration" onAction="#openFileExplorerClick"/>
   <Button text="Continue existing loading" />
 </VBox>
