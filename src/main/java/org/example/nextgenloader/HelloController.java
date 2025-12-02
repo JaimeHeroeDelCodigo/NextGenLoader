@@ -7,6 +7,8 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 
+import static org.example.nextgenloader.management.FileManagement.validDirectory;
+
 
 public class HelloController {
     @FXML
@@ -16,24 +18,25 @@ public class HelloController {
     protected void openFileExplorerClick() {
 
         DirectoryChooser directoryChooser = new DirectoryChooser();
-
         directoryChooser.setTitle("Select a directory");
-
         File selectedDirectory = directoryChooser.showDialog(null);
 
-        System.out.println("############################################################");
+        if(selectedDirectory != null) {
+            if(validDirectory(selectedDirectory)) {
+                System.out.println("Directorio valido");
+            } else {
+                System.out.println("Directorio invalido");
+            }
 
-        System.out.println(selectedDirectory.getAbsolutePath());
+        }
 
 
 
-
-
-
-
-
-        //welcomeText.setText("New loading started");
-        
 
     }
+
+
+
+
+
 }
