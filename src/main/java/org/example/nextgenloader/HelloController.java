@@ -1,10 +1,15 @@
 package org.example.nextgenloader;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
+
 import java.io.File;
+import java.io.IOException;
 
 import static org.example.nextgenloader.management.FileManagement.validDirectory;
 
@@ -21,7 +26,8 @@ public class HelloController {
 
         if(selectedDirectory != null) {
             if(validDirectory(selectedDirectory)) {
-                System.out.println("Directorio valido");
+                loadConfiguration();
+
             } else {
                 Alert alertWrongDirectory = new Alert(Alert.AlertType.ERROR);
                 alertWrongDirectory.setTitle("Wrong directory");
@@ -32,4 +38,12 @@ public class HelloController {
             }
         }
     }
+
+    protected void loadConfiguration() {
+        System.out.println("Directorio valido");
+
+
+    }
+
+
 }
