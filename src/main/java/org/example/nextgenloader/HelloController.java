@@ -1,14 +1,12 @@
 package org.example.nextgenloader;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
-
 import java.io.File;
 
 import static org.example.nextgenloader.management.FileManagement.validDirectory;
-
 
 public class HelloController {
     @FXML
@@ -25,18 +23,13 @@ public class HelloController {
             if(validDirectory(selectedDirectory)) {
                 System.out.println("Directorio valido");
             } else {
-                System.out.println("Directorio invalido");
+                Alert alertWrongDirectory = new Alert(Alert.AlertType.ERROR);
+                alertWrongDirectory.setTitle("Wrong directory");
+                alertWrongDirectory.setHeaderText("Wrong Directory selected");
+                alertWrongDirectory.setContentText("The files are not csv or the directory does not exist " +
+                        "ot it is empty");
+                alertWrongDirectory.showAndWait();
             }
-
         }
-
-
-
-
     }
-
-
-
-
-
 }

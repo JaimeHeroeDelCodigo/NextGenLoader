@@ -7,7 +7,6 @@ public class FileManagement {
 
     static public boolean validFiles(File[] files) {
         for(File file:files) {
-           // System.out.println(file.getName());
             if(!file.getName().endsWith(".csv") ) {
                 return false;
             }
@@ -20,7 +19,7 @@ public class FileManagement {
             return false;
         }
 
-        return Objects.requireNonNull(directory.listFiles()).length != 0 ||
+        return Objects.requireNonNull(directory.listFiles()).length != 0 &&
                 validFiles(Objects.requireNonNull(directory.listFiles()));
     }
 
