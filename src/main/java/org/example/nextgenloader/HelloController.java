@@ -1,15 +1,14 @@
 package org.example.nextgenloader;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
 
 import static org.example.nextgenloader.management.FileManagement.validDirectory;
 
@@ -18,7 +17,7 @@ public class HelloController {
     private Label welcomeText;
 
     @FXML
-    protected void openFileExplorerClick() {
+    protected void openFileExplorerClick(ActionEvent actionEvent) {
 
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select a directory");
@@ -26,7 +25,8 @@ public class HelloController {
 
         if(selectedDirectory != null) {
             if(validDirectory(selectedDirectory)) {
-                loadConfiguration();
+                loadConfiguration(actionEvent);
+
 
             } else {
                 Alert alertWrongDirectory = new Alert(Alert.AlertType.ERROR);
@@ -39,11 +39,12 @@ public class HelloController {
         }
     }
 
-    protected void loadConfiguration() {
+    protected void loadConfiguration(ActionEvent actionEvent) {
+        Button sourceButton =  (Button)actionEvent.getSource();
+        Stage sourceStage = (Stage) sourceButton.getScene().getWindow();
+        sourceStage.close();
+
         System.out.println("Directorio valido");
-
-
     }
-
 
 }
