@@ -7,17 +7,23 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 
 import static org.example.nextgenloader.management.FileManagement.validDirectory;
 
 public class HelloController {
+
+    public static Logger log = LoggerFactory.getLogger(HelloController.class);
+
     @FXML
     private Label welcomeText;
 
     @FXML
     protected void openFileExplorerClick(ActionEvent actionEvent) {
+
+
 
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select a directory");
@@ -44,7 +50,7 @@ public class HelloController {
         Stage sourceStage = (Stage) sourceButton.getScene().getWindow();
         sourceStage.close();
 
-        System.out.println("Directorio valido");
+        log.info("Directorio valido");
     }
 
 }
