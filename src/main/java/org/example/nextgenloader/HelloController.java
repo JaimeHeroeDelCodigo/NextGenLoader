@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
@@ -20,11 +22,10 @@ public class HelloController {
     @FXML
     private Label welcomeText;
 
+    private Integer numberOFiles;
+
     @FXML
     protected void openFileExplorerClick(ActionEvent actionEvent) {
-
-
-
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select a directory");
         File selectedDirectory = directoryChooser.showDialog(null);
@@ -32,8 +33,6 @@ public class HelloController {
         if(selectedDirectory != null) {
             if(validDirectory(selectedDirectory)) {
                 loadConfiguration(actionEvent);
-
-
             } else {
                 Alert alertWrongDirectory = new Alert(Alert.AlertType.ERROR);
                 alertWrongDirectory.setTitle("Wrong directory");
@@ -45,12 +44,19 @@ public class HelloController {
         }
     }
 
+    protected void promptNumberOfFiles() {
+        Label promptLabel = new Label ("Enter the input number");
+        TextField inputFiled = new TextField();
+        Button accessButton = new Button("Enter");
+        Label warningLabel = new Label();
+
+        VBox vBox = new VBox(10,promptLabel,inputFiled,accessButton,warningLabel);
+    }
+
     protected void loadConfiguration(ActionEvent actionEvent) {
         Button sourceButton =  (Button)actionEvent.getSource();
         Stage sourceStage = (Stage) sourceButton.getScene().getWindow();
         sourceStage.close();
-
-        log.info("Directorio valido");
     }
 
 }
