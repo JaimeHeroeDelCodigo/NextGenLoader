@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.Objects;
 
-import static org.example.nextgenloader.alerts.Alerts.alertGenerator;
+import static org.example.nextgenloader.alerts.Alerts.errorAlertGenerator;
 import static org.example.nextgenloader.files.FileManagement.validDirectory;
 
 public class HelloController {
@@ -41,7 +41,9 @@ public class HelloController {
 
             } else {
                 numberOFiles = 0;
-                alertGenerator();
+                errorAlertGenerator("Wrong directory","Wrong Directory selected",
+                        "The files are not csv or the directory does not exist or it is empty");
+
             }
         }
     }
