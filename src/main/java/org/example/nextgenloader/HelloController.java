@@ -31,12 +31,17 @@ public class HelloController {
         if(selectedDirectory != null) {
             if(validDirectory(selectedDirectory)) {
                 numberOFiles = Objects.requireNonNull(selectedDirectory.listFiles()).length;
-                loadConfiguration(actionEvent);
-                //Integer numberOfFilesToBeCharged = promptNumberOfFiles();
 
-                if(promptNumberOfFiles()==null) {
+                Integer numberOfFilesToBeCharged = promptNumberOfFiles();
 
-
+                if(numberOfFilesToBeCharged==null) {
+                    errorAlertGenerator("Wrong input","Empty number input",
+                            "The number was not entered is empty or is not a valid input.");
+                } else if (!Objects.equals(numberOfFilesToBeCharged, numberOFiles)) {
+                    errorAlertGenerator("Loading error","Non matching files",
+                            "The number of files in the directory differs.");
+                } else {
+                    loadConfiguration(actionEvent);
                 }
 
             } else {
