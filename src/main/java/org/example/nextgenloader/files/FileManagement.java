@@ -1,4 +1,4 @@
-package org.example.nextgenloader.management;
+package org.example.nextgenloader.files;
 
 import java.io.File;
 import java.util.Objects;

@@ -2,18 +2,15 @@ package org.example.nextgenloader;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.Objects;
-import java.util.Optional;
 
-import static org.example.nextgenloader.management.FileManagement.validDirectory;
+import static org.example.nextgenloader.files.FileManagement.validDirectory;
 
 public class HelloController {
 
@@ -53,23 +50,16 @@ public class HelloController {
         }
     }
 
-
-
     protected Integer promptNumberOfFiles() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Number of files");
         dialog.setHeaderText("Please enter the number of files expected to be loaded:");
         dialog.setContentText("Number of files:");
 
-
         String  result = dialog.showAndWait().orElse("");
 
-
-
-        return result.isEmpty() ? null: Integer.valueOf(result) ;
-
+        return result.isEmpty() ? null: Integer.valueOf(result);
     }
-
 
     protected void loadConfiguration(ActionEvent actionEvent) {
         Button sourceButton =  (Button) actionEvent.getSource();
