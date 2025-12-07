@@ -13,9 +13,9 @@ import java.util.Objects;
 import static org.example.nextgenloader.alerts.Alerts.errorAlertGenerator;
 import static org.example.nextgenloader.files.FileManagement.validDirectory;
 
-public class HelloController {
+public class HomeController {
 
-    public static Logger log = LoggerFactory.getLogger(HelloController.class);
+    public static Logger log = LoggerFactory.getLogger(HomeController.class);
 
     @FXML
     private Label welcomeText;
