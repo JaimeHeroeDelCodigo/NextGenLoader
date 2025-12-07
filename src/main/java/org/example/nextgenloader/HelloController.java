@@ -2,16 +2,16 @@ package org.example.nextgenloader;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
+import java.util.Objects;
+import java.util.Optional;
 
 import static org.example.nextgenloader.management.FileManagement.validDirectory;
 
@@ -32,8 +32,17 @@ public class HelloController {
 
         if(selectedDirectory != null) {
             if(validDirectory(selectedDirectory)) {
+                numberOFiles = Objects.requireNonNull(selectedDirectory.listFiles()).length;
                 loadConfiguration(actionEvent);
+                //Integer numberOfFilesToBeCharged = promptNumberOfFiles();
+
+                if(promptNumberOfFiles()==null) {
+
+
+                }
+
             } else {
+                numberOFiles = 0;
                 Alert alertWrongDirectory = new Alert(Alert.AlertType.ERROR);
                 alertWrongDirectory.setTitle("Wrong directory");
                 alertWrongDirectory.setHeaderText("Wrong Directory selected");
@@ -44,17 +53,26 @@ public class HelloController {
         }
     }
 
-    protected void promptNumberOfFiles() {
-        Label promptLabel = new Label ("Enter the input number");
-        TextField inputFiled = new TextField();
-        Button accessButton = new Button("Enter");
-        Label warningLabel = new Label();
 
-        VBox vBox = new VBox(10,promptLabel,inputFiled,accessButton,warningLabel);
+
+    protected Integer promptNumberOfFiles() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Number of files");
+        dialog.setHeaderText("Please enter the number of files expected to be loaded:");
+        dialog.setContentText("Number of files:");
+
+
+        String  result = dialog.showAndWait().orElse("");
+
+
+
+        return result.isEmpty() ? null: Integer.valueOf(result) ;
+
     }
 
+
     protected void loadConfiguration(ActionEvent actionEvent) {
-        Button sourceButton =  (Button)actionEvent.getSource();
+        Button sourceButton =  (Button) actionEvent.getSource();
         Stage sourceStage = (Stage) sourceButton.getScene().getWindow();
         sourceStage.close();
     }
