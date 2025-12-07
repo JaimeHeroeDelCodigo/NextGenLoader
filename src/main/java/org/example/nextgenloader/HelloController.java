@@ -31,9 +31,7 @@ public class HelloController {
         if(selectedDirectory != null) {
             if(validDirectory(selectedDirectory)) {
                 numberOFiles = Objects.requireNonNull(selectedDirectory.listFiles()).length;
-
                 Integer numberOfFilesToBeCharged = promptNumberOfFiles();
-
                 if(numberOfFilesToBeCharged==null) {
                     errorAlertGenerator("Wrong input","Empty number input",
                             "The number was not entered is empty or is not a valid input.");
@@ -43,7 +41,6 @@ public class HelloController {
                 } else {
                     loadConfiguration(actionEvent);
                 }
-
             } else {
                 numberOFiles = 0;
                 errorAlertGenerator("Wrong directory","Wrong Directory selected",
