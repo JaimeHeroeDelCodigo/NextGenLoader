@@ -7,6 +7,7 @@ module org.example.nextgenloader {
     requires org.kordamp.bootstrapfx.core;
     requires com.almasb.fxgl.all;
     requires org.slf4j;
+    requires ch.qos.logback.classic;
 
     opens org.example.nextgenloader to javafx.fxml;
     exports org.example.nextgenloader;

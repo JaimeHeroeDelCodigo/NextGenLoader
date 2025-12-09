@@ -55,10 +55,14 @@ public class HomeController {
         dialog.setTitle("Number of files");
         dialog.setHeaderText("Please enter the number of files expected to be loaded:");
         dialog.setContentText("Number of files:");
-
         String  result = dialog.showAndWait().orElse("");
-
-        return result.isEmpty() ? null: Integer.valueOf(result);
+        
+        try {
+            return result.isEmpty() ? null: Integer.valueOf(result);
+        } catch( NumberFormatException e) {
+            log.warn("Wrong format number.",e);
+            return null;
+        }
     }
 
     protected void loadConfiguration(ActionEvent actionEvent) {
