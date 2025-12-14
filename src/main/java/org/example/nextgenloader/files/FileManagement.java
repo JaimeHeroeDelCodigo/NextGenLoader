@@ -1,6 +1,9 @@
 package org.example.nextgenloader.files;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 public class FileManagement {
@@ -13,8 +16,6 @@ public class FileManagement {
         }
         return true;
     }
-
-
 
     static public boolean validDirectory(File directory) {
         if(!directory.exists()) {
@@ -29,4 +30,8 @@ public class FileManagement {
         return directory.getPath().concat("/OUTPUT" );
     }
 
+    public static void createControlFile(File directory) throws IOException {
+        String outputDir = directory.getPath().concat("/OUTPUT/control.txt");
+        Files.createFile(Paths.get(outputDir));
+    }
 }

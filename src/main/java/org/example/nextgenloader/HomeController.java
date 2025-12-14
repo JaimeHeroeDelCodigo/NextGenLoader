@@ -10,13 +10,11 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import static java.nio.file.Files.createDirectory;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
 import static org.example.nextgenloader.alerts.Alerts.errorAlertGenerator;
-import static org.example.nextgenloader.files.FileManagement.pathNewDirectoryString;
-import static org.example.nextgenloader.files.FileManagement.validDirectory;
+import static org.example.nextgenloader.files.FileManagement.*;
 
 public class HomeController {
 
@@ -77,11 +75,13 @@ public class HomeController {
 
         try {
             createDirectory(Paths.get(pathNewDirectoryString(directory)));
-
             File [] csv_list = directory.listFiles();
+            createControlFile(directory);
 
-            for (File file: csv_list) {
+            if(csv_list!=null) {
+                for (File file: csv_list) {
 
+                }
             }
 
         } catch (IOException e) {
