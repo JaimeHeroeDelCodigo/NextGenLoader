@@ -8,6 +8,10 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 import static org.example.nextgenloader.alerts.Alerts.errorAlertGenerator;
@@ -39,7 +43,7 @@ public class HomeController {
                     errorAlertGenerator("Loading error","Non matching files",
                             "The number of files in the directory differs.");
                 } else {
-                    loadConfiguration(actionEvent);
+                    loadConfiguration(actionEvent, selectedDirectory);
                 }
             } else {
                 numberOFiles = 0;
@@ -65,10 +69,24 @@ public class HomeController {
         }
     }
 
-    protected void loadConfiguration(ActionEvent actionEvent) {
+    protected void loadConfiguration(ActionEvent actionEvent, File directory)  {
         Button sourceButton =  (Button) actionEvent.getSource();
         Stage sourceStage = (Stage) sourceButton.getScene().getWindow();
         sourceStage.close();
+
+        File [] csv_list = directory.listFiles();
+
+        try {
+            Files.createDirectory(Paths.get(pathNewDirectoryString(directory)));
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private String pathNewDirectoryString(File directory) {
+        return directory.getPath().concat("/OUTPUT" );
     }
 
 }
