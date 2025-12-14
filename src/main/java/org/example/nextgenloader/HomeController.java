@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
+import static java.nio.file.Files.createDirectory;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
@@ -76,10 +76,12 @@ public class HomeController {
         sourceStage.close();
 
         try {
-            Files.createDirectory(Paths.get(pathNewDirectoryString(directory)));
+            createDirectory(Paths.get(pathNewDirectoryString(directory)));
+
             File [] csv_list = directory.listFiles();
+
             for (File file: csv_list) {
-                System.out.println("File name: " + file.getName());
+
             }
 
         } catch (IOException e) {
