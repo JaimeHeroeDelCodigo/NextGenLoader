@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 import java.util.Objects;
 
 import static org.example.nextgenloader.alerts.Alerts.errorAlertGenerator;
+import static org.example.nextgenloader.files.FileManagement.pathNewDirectoryString;
 import static org.example.nextgenloader.files.FileManagement.validDirectory;
 
 public class HomeController {
@@ -74,10 +75,12 @@ public class HomeController {
         Stage sourceStage = (Stage) sourceButton.getScene().getWindow();
         sourceStage.close();
 
-        File [] csv_list = directory.listFiles();
-
         try {
             Files.createDirectory(Paths.get(pathNewDirectoryString(directory)));
+            File [] csv_list = directory.listFiles();
+            for (File file: csv_list) {
+                System.out.println("File name: " + file.getName());
+            }
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -85,8 +88,5 @@ public class HomeController {
     }
 
 
-    private String pathNewDirectoryString(File directory) {
-        return directory.getPath().concat("/OUTPUT" );
-    }
 
 }

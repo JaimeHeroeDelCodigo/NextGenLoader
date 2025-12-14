@@ -25,4 +25,8 @@ public class FileManagement {
                 validFiles(Objects.requireNonNull(directory.listFiles()));
     }
 
+    public static String pathNewDirectoryString(File directory) {
+        return directory.getPath().concat("/OUTPUT" );
+    }
+
 }
