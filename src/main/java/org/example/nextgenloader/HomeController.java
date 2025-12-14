@@ -74,8 +74,9 @@ public class HomeController {
         sourceStage.close();
 
         try {
-            createDirectory(Paths.get(pathNewDirectoryString(directory)));
             File [] csv_list = directory.listFiles();
+            createDirectory(Paths.get(pathNewDirectoryString(directory)));
+
             createControlFile(directory,csv_list);
 
             if(csv_list!=null) {

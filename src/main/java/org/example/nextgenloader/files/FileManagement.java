@@ -31,14 +31,19 @@ public class FileManagement {
     }
 
     public static void createControlFile(File directory,File [] file_list) throws IOException {
-        String outputDir = directory.getPath().concat("/OUTPUT/control.txt");
-        Files.createFile(Paths.get(outputDir));
-        fileLoadingInControlFile(directory,file_list);
+        String controlPath = directory.getPath().concat("/OUTPUT/control.txt");
+        File controlFile = new File(controlPath);
+
+        Files.createFile(Paths.get(controlPath));
+        fileLoadingInControlFile(controlFile,file_list);
     }
 
 
-    private static void fileLoadingInControlFile(File controlFile,File [] file_list) {
+    private static void fileLoadingInControlFile(File controlFile,File [] file_list) throws IOException {
         for(File file:file_list) {
+            String tenderNumber = (file.getName().split("_")[0]).concat("\n");
+            Files.write(Paths.get(controlFile.getPath()) ,tenderNumber.getBytes());
+
 
         }
 
