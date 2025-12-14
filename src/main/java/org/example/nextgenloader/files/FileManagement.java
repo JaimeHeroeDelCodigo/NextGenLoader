@@ -35,17 +35,15 @@ public class FileManagement {
         File controlFile = new File(controlPath);
 
         Files.createFile(Paths.get(controlPath));
-        fileLoadingInControlFile(controlFile,file_list);
+
     }
 
 
-    private static void fileLoadingInControlFile(File controlFile,File [] file_list) throws IOException {
-        for(File file:file_list) {
-            String tenderNumber = (file.getName().split("_")[0]).concat("\n");
-            Files.write(Paths.get(controlFile.getPath()) ,tenderNumber.getBytes());
+    private static void tenderNumberLoadingInControlFile(File controlFile,String tenderNumber) throws IOException {
 
+            String tenderNumberToRegister = tenderNumber.concat("\n");
+            Files.write(Paths.get(controlFile.getPath()) ,tenderNumberToRegister.getBytes());
 
-        }
 
     }
 }

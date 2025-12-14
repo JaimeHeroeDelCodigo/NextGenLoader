@@ -11,7 +11,4 @@ public class Alerts {
         alertWrongDirectory.setContentText(text);
         alertWrongDirectory.showAndWait();
     }
-
-
-
 }
