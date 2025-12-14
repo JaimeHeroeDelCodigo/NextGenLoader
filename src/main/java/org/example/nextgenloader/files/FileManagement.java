@@ -30,8 +30,17 @@ public class FileManagement {
         return directory.getPath().concat("/OUTPUT" );
     }
 
-    public static void createControlFile(File directory) throws IOException {
+    public static void createControlFile(File directory,File [] file_list) throws IOException {
         String outputDir = directory.getPath().concat("/OUTPUT/control.txt");
         Files.createFile(Paths.get(outputDir));
+        fileLoadingInControlFile(directory,file_list);
+    }
+
+
+    private static void fileLoadingInControlFile(File controlFile,File [] file_list) {
+        for(File file:file_list) {
+
+        }
+
     }
 }

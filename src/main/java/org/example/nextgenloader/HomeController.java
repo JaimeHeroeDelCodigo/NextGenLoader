@@ -76,7 +76,7 @@ public class HomeController {
         try {
             createDirectory(Paths.get(pathNewDirectoryString(directory)));
             File [] csv_list = directory.listFiles();
-            createControlFile(directory);
+            createControlFile(directory,csv_list);
 
             if(csv_list!=null) {
                 for (File file: csv_list) {
