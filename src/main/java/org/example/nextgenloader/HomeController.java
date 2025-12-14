@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import static java.nio.file.Files.createDirectory;
+
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
@@ -75,14 +77,18 @@ public class HomeController {
 
         try {
             File [] csv_list = directory.listFiles();
-            createDirectory(Paths.get(pathNewDirectoryString(directory)));
 
-            createControlFile(directory,csv_list);
+            String directoryOutput = directory.getPath().concat("/OUTPUT" );
+            Path pathDirectoryOutput = Paths.get(directoryOutput);
+            createDirectory(pathDirectoryOutput);
+            createControlFile(directory);
 
-            if(csv_list!=null) {
-                for (File file: csv_list) {
-
-                }
+            for (File file:csv_list) {
+                String tenderNumber= file.getName().split("_")[0];
+                String tenderNumberDir = directoryOutput + "/" + tenderNumber;
+                String backUpDir = directoryOutput + "/" + "BACKUP";
+                createDirectory(Paths.get(tenderNumberDir));
+                createDirectory(Paths.get(backUpDir));
             }
 
         } catch (IOException e) {

@@ -30,20 +30,15 @@ public class FileManagement {
         return directory.getPath().concat("/OUTPUT" );
     }
 
-    public static void createControlFile(File directory,File [] file_list) throws IOException {
+    public static void createControlFile(File directory) throws IOException {
         String controlPath = directory.getPath().concat("/OUTPUT/control.txt");
-        File controlFile = new File(controlPath);
-
         Files.createFile(Paths.get(controlPath));
-
     }
 
 
     private static void tenderNumberLoadingInControlFile(File controlFile,String tenderNumber) throws IOException {
-
             String tenderNumberToRegister = tenderNumber.concat("\n");
             Files.write(Paths.get(controlFile.getPath()) ,tenderNumberToRegister.getBytes());
-
 
     }
 }
