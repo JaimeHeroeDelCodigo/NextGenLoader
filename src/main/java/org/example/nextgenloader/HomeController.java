@@ -82,11 +82,14 @@ public class HomeController {
             Path pathDirectoryOutput = Paths.get(directoryOutput);
             createDirectory(pathDirectoryOutput);
             createControlFile(directory);
+            System.out.println("?????????????????????");
+            System.out.println(csv_list.length);
+
 
             for (File file:csv_list) {
                 String tenderNumber= file.getName().split("_")[0];
                 String tenderNumberDir = directoryOutput + "/" + tenderNumber;
-                String backUpDir = directoryOutput + "/" + "BACKUP";
+                String backUpDir = tenderNumberDir + "/" + "BACKUP";
                 createDirectory(Paths.get(tenderNumberDir));
                 createDirectory(Paths.get(backUpDir));
             }
