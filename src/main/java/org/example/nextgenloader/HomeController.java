@@ -11,8 +11,10 @@ import java.io.File;
 import java.io.IOException;
 import static java.nio.file.Files.createDirectory;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
 import static org.example.nextgenloader.alerts.Alerts.errorAlertGenerator;
@@ -87,11 +89,30 @@ public class HomeController {
 
 
             for (File file:csv_list) {
+
+
+                String fileDir = file.getPath();
+
+                Path fileDirPath = Paths.get(fileDir);
+
+
+
                 String tenderNumber= file.getName().split("_")[0];
                 String tenderNumberDir = directoryOutput + "/" + tenderNumber;
+
+                String tenderNumberINGENICODir = tenderNumberDir + "/" + file.getName();
+                Path tenderNumberINGENICODirPath = Paths.get(tenderNumberINGENICODir);
+
+                Path tenderNumberDirPath = Paths.get(tenderNumberDir);
                 String backUpDir = tenderNumberDir + "/" + "BACKUP";
-                createDirectory(Paths.get(tenderNumberDir));
+                String backUpDirFile = backUpDir + "/" + file.getName();
+                createDirectory(tenderNumberDirPath );
                 createDirectory(Paths.get(backUpDir));
+
+                Files.copy(fileDirPath,Paths.get(backUpDirFile),StandardCopyOption.REPLACE_EXISTING);
+
+                Files.copy(fileDirPath, tenderNumberINGENICODirPath.resolveSibling("INGENICO - " + file.getName())  );
+
             }
 
         } catch (IOException e) {
