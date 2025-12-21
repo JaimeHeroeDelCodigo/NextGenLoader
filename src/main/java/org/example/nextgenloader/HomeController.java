@@ -18,7 +18,9 @@ import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
 import static org.example.nextgenloader.alerts.Alerts.errorAlertGenerator;
+import static org.example.nextgenloader.alerts.Alerts.yesNoPromptAfterLoading;
 import static org.example.nextgenloader.files.FileManagement.*;
+import static org.example.nextgenloader.utils.Numeric.isACorrectNumber;
 
 public class HomeController {
 
@@ -38,15 +40,17 @@ public class HomeController {
         if(selectedDirectory != null) {
             if(validDirectory(selectedDirectory)) {
                 numberOFiles = Objects.requireNonNull(selectedDirectory.listFiles()).length;
-                Integer numberOfFilesToBeCharged = promptNumberOfFiles();
-                if(numberOfFilesToBeCharged==null) {
-                    errorAlertGenerator("Wrong input","Empty number input",
-                            "The number was not entered is empty or is not a valid input.");
-                } else if (!Objects.equals(numberOfFilesToBeCharged, numberOFiles)) {
-                    errorAlertGenerator("Loading error","Non matching files",
-                            "The number of files in the directory differs.");
-                } else {
-                    loadConfiguration(actionEvent, selectedDirectory);
+                String numberOfFilesToBeCharged = promptNumberOfFiles();
+                if(numberOfFilesToBeCharged!=null) {
+                    if (!isACorrectNumber(numberOfFilesToBeCharged)) {
+                        errorAlertGenerator("Wrong input", "Empty number input",
+                                "The number was not entered is empty or is not a valid input.");
+                    } else if (!Objects.equals(Integer.valueOf(numberOfFilesToBeCharged), numberOFiles)) {
+                        errorAlertGenerator("Loading error", "Non matching files",
+                                "The number of files in the directory differs.");
+                    } else {
+                        loadConfiguration(actionEvent, selectedDirectory);
+                    }
                 }
             } else {
                 numberOFiles = 0;
@@ -57,19 +61,12 @@ public class HomeController {
         }
     }
 
-    protected Integer promptNumberOfFiles() {
+    protected String promptNumberOfFiles() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Number of files");
         dialog.setHeaderText("Please enter the number of files expected to be loaded:");
         dialog.setContentText("Number of files:");
-        String  result = dialog.showAndWait().orElse("");
-        
-        try {
-            return result.isEmpty() ? null: Integer.valueOf(result);
-        } catch( NumberFormatException e) {
-            log.warn("Wrong format number.",e);
-            return null;
-        }
+        return dialog.showAndWait().orElse(null);
     }
 
     protected void loadConfiguration(ActionEvent actionEvent, File directory)  {
@@ -84,18 +81,12 @@ public class HomeController {
             Path pathDirectoryOutput = Paths.get(directoryOutput);
             createDirectory(pathDirectoryOutput);
             createControlFile(directory);
-            System.out.println("?????????????????????");
-            System.out.println(csv_list.length);
 
 
             for (File file:csv_list) {
-
-
                 String fileDir = file.getPath();
 
                 Path fileDirPath = Paths.get(fileDir);
-
-
 
                 String tenderNumber= file.getName().split("_")[0];
                 String tenderNumberDir = directoryOutput + "/" + tenderNumber;
@@ -111,8 +102,12 @@ public class HomeController {
 
                 Files.copy(fileDirPath,Paths.get(backUpDirFile),StandardCopyOption.REPLACE_EXISTING);
 
-                Files.copy(fileDirPath, tenderNumberINGENICODirPath.resolveSibling("INGENICO - " + file.getName())  );
+                Files.copy(fileDirPath, tenderNumberINGENICODirPath.resolveSibling("INGENICO - " + file.getName()));
 
+                boolean b = yesNoPromptAfterLoading("Success", "Configuration Loading completed", "¿Do you want to " +
+                        "continue with the loading right now?");
+
+                System.out.println(b);
             }
 
         } catch (IOException e) {
