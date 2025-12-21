@@ -103,12 +103,10 @@ public class HomeController {
                 Files.copy(fileDirPath,Paths.get(backUpDirFile),StandardCopyOption.REPLACE_EXISTING);
 
                 Files.copy(fileDirPath, tenderNumberINGENICODirPath.resolveSibling("INGENICO - " + file.getName()));
-
-                boolean b = yesNoPromptAfterLoading("Success", "Configuration Loading completed", "¿Do you want to " +
-                        "continue with the loading right now?");
-
-                System.out.println(b);
             }
+
+            boolean b = yesNoPromptAfterLoading("Success", "Configuration Loading completed", "¿Do you want to " +
+                    "continue with the loading right now?");
 
         } catch (IOException e) {
             throw new RuntimeException(e);
