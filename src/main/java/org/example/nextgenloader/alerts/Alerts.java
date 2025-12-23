@@ -19,7 +19,7 @@ public class Alerts {
         alertWrongDirectory.showAndWait();
     }
 
-    public static boolean yesNoPromptAfterLoading(String title,String header,String content) {
+    public static Optional<ButtonType> yesNoPromptAfterLoading(String title,String header,String content) {
 
         Alert yesNoAlert = new Alert(CONFIRMATION);
 
@@ -27,12 +27,6 @@ public class Alerts {
         yesNoAlert.setHeaderText(header);
         yesNoAlert.setContentText(content);
 
-        ButtonType yesButton= new ButtonType("Yes");
-        ButtonType noButton = new ButtonType("No");
-
-        yesNoAlert.getButtonTypes().setAll(yesButton,noButton);
-        Optional<ButtonType> result = yesNoAlert.showAndWait();
-
-        return  result.isPresent() && yesButton.equals(result.get());
+        return yesNoAlert.showAndWait();
     }
 }

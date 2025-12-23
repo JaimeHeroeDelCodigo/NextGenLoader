@@ -16,6 +16,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
+import java.util.Optional;
+
+import org.example.nextgenloader.NextGenLoaderApplication.*;
 
 import static org.example.nextgenloader.alerts.Alerts.errorAlertGenerator;
 import static org.example.nextgenloader.alerts.Alerts.yesNoPromptAfterLoading;
@@ -105,10 +108,25 @@ public class HomeController {
                 Files.copy(fileDirPath, tenderNumberINGENICODirPath.resolveSibling("INGENICO - " + file.getName()));
             }
 
-            boolean b = yesNoPromptAfterLoading("Success", "Configuration Loading completed", "¿Do you want to " +
+            Optional<ButtonType> confirmation = yesNoPromptAfterLoading("Success", "Configuration Loading completed", "¿Do you want to " +
                     "continue with the loading right now?");
 
+
+
+
+            if (confirmation.isPresent() &&  ButtonType.OK.equals(confirmation.get())){
+                System.out.println("Inicia el proceso...");
+            } else {
+                NextGenLoaderApplication app = new NextGenLoaderApplication();
+                Stage stage = new Stage();
+                app.start(stage);
+
+            }
+
+
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
