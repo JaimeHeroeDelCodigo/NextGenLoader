@@ -18,8 +18,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 import java.util.Optional;
 
-import org.example.nextgenloader.NextGenLoaderApplication.*;
-
 import static org.example.nextgenloader.alerts.Alerts.errorAlertGenerator;
 import static org.example.nextgenloader.alerts.Alerts.yesNoPromptAfterLoading;
 import static org.example.nextgenloader.files.FileManagement.*;
