@@ -3,6 +3,7 @@ package org.example.nextgenloader.files;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
@@ -39,6 +40,8 @@ public class FileManagement {
     private static void tenderNumberLoadingInControlFile(File controlFile,String tenderNumber) throws IOException {
             String tenderNumberToRegister = tenderNumber.concat("\n");
             Files.write(Paths.get(controlFile.getPath()) ,tenderNumberToRegister.getBytes());
+    }
 
+    public static void fileProcessing(File[] files, Path outputDir) {
     }
 }
