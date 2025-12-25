@@ -111,19 +111,13 @@ public class HomeController {
             Optional<ButtonType> confirmation = yesNoPromptAfterLoading("Success", "Configuration Loading completed", "¿Do you want to " +
                     "continue with the loading right now?");
 
-
-
-
             if (confirmation.isPresent() &&  ButtonType.OK.equals(confirmation.get())){
                 System.out.println("Inicia el proceso...");
             } else {
                 NextGenLoaderApplication app = new NextGenLoaderApplication();
                 Stage stage = new Stage();
                 app.start(stage);
-
             }
-
-
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
