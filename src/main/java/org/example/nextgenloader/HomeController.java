@@ -110,13 +110,17 @@ public class HomeController {
                     "continue with the loading right now?");
 
             if (confirmation.isPresent() &&  ButtonType.OK.equals(confirmation.get())){
-                System.out.println("Inicia el proceso...");
+                NextGenLoadingScreenApplication app = new  NextGenLoadingScreenApplication();
+                Stage stage = new Stage();
+                app.start(stage);
             } else {
                 NextGenLoaderApplication app = new NextGenLoaderApplication();
                 Stage stage = new Stage();
                 app.start(stage);
             }
         } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
