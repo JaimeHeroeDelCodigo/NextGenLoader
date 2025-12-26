@@ -107,7 +107,9 @@ public class HomeController {
 
                 fileProcessing(new File(tenderNumberDir + "/" +   "INGENICO - " + file.getName()));
 
+                File control = new File(directoryOutput + "/control.txt");
 
+                fileRegister(control,tenderNumber);
             }
 
             Optional<ButtonType> confirmation = yesNoPromptAfterLoading("Success", "Configuration Loading completed", "¿Do you want to " +

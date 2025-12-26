@@ -79,7 +79,36 @@ public class FileManagement {
         }
     }
 
-    public static void fileRegister(File controlFile,String fileName) throws FileNotFoundException {
+    public static boolean fileRegister(File controlFile,String fileName) throws IOException {
+
+        String pathOfControlFile= controlFile.getParent();
+        String pathTempFile = Paths.get(pathOfControlFile) + "/tempControl.txt";
+
+        Files.createFile(Paths.get(pathTempFile));
+
+
+        File tempControl = new File(pathTempFile);
+
+        BufferedReader reader = new BufferedReader(new FileReader(controlFile));
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(tempControl));
+
+        String currentLine;
+
+        while( (currentLine = reader.readLine())!=null ) {
+            writer.write(currentLine);
+            writer.write("\n");
+        }
+        writer.write(fileName);
+
+        writer.close();
+        reader.close();
+
+        if(controlFile.delete()) {
+            return tempControl.renameTo(controlFile);
+        } else {
+            return  false;
+        }
 
     }
 }
