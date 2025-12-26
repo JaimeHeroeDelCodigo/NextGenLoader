@@ -1,13 +1,16 @@
 package org.example.nextgenloader.files;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
 public class FileManagement {
+
+    public static final String INGENICO_PHRASE = ",\"IngenicoLane8000\",,,,\"UPP\",\"Ingenico\",\"Lane 8000\",\"SERIAL\",,\"COM9\",";
+
+    public static final String VERIFONE_PHRASE = ",\"Default\",,,,\"FormAgent\",\"Verifone\",\"MX925\",\"SERIAL\",,\"COM9\",";
 
     static public boolean validFiles(File[] files) {
         for(File file:files) {
@@ -42,6 +45,41 @@ public class FileManagement {
             Files.write(Paths.get(controlFile.getPath()) ,tenderNumberToRegister.getBytes());
     }
 
-    public static void fileProcessing(File[] files, Path outputDir) {
+    public static boolean fileProcessing(File file) throws IOException {
+
+        String pathTempFile = Paths.get(file.getParent()) + "/tempFile.csv";
+
+        Files.createFile(Paths.get(pathTempFile));
+
+        File tempFile = new File( pathTempFile);
+
+        System.out.println("============================================================================");
+        System.out.println("============================================================================");
+        System.out.println(file.getAbsolutePath());
+
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+        String currentLine;
+        while((currentLine = reader.readLine()) !=null) {
+            if (currentLine.contains(VERIFONE_PHRASE)) {
+                currentLine = currentLine.replace(VERIFONE_PHRASE,INGENICO_PHRASE);
+            }
+            writer.write(currentLine);
+            writer.write("\n");
+        }
+        writer.close();
+        reader.close();
+
+        if(file.delete()) {
+            return tempFile.renameTo(file);
+        } else {
+            return  false;
+        }
+    }
+
+    public static void fileRegister(File controlFile,String fileName) throws FileNotFoundException {
+
     }
 }

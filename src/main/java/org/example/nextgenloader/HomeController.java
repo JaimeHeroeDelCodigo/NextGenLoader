@@ -104,6 +104,10 @@ public class HomeController {
                 Files.copy(fileDirPath,Paths.get(backUpDirFile),StandardCopyOption.REPLACE_EXISTING);
 
                 Files.copy(fileDirPath, tenderNumberINGENICODirPath.resolveSibling("INGENICO - " + file.getName()));
+
+                fileProcessing(new File(tenderNumberDir + "/" +   "INGENICO - " + file.getName()));
+
+
             }
 
             Optional<ButtonType> confirmation = yesNoPromptAfterLoading("Success", "Configuration Loading completed", "¿Do you want to " +
