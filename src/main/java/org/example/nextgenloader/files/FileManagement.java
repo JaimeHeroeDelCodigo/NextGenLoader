@@ -2,7 +2,6 @@ package org.example.nextgenloader.files;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
@@ -83,18 +82,11 @@ public class FileManagement {
 
         String pathOfControlFile= controlFile.getParent();
         String pathTempFile = Paths.get(pathOfControlFile) + "/tempControl.txt";
-
         Files.createFile(Paths.get(pathTempFile));
-
-
         File tempControl = new File(pathTempFile);
-
         BufferedReader reader = new BufferedReader(new FileReader(controlFile));
-
         BufferedWriter writer = new BufferedWriter(new FileWriter(tempControl));
-
         String currentLine;
-
         while( (currentLine = reader.readLine())!=null ) {
             writer.write(currentLine);
             writer.write("\n");
