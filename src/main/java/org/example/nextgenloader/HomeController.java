@@ -116,7 +116,7 @@ public class HomeController {
                     "continue with the loading right now?");
 
             if (confirmation.isPresent() &&  ButtonType.OK.equals(confirmation.get())){
-                NextGenLoadingScreenApplication app = new  NextGenLoadingScreenApplication();
+                NextGenLoadingScreenApplication app = new  NextGenLoadingScreenApplication(pathDirectoryOutput);
                 Stage stage = new Stage();
                 app.start(stage);
             } else {
