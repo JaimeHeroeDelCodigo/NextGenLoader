@@ -34,12 +34,23 @@
             <padding>
                 <Insets top="10" bottom="10" right="10" left="10"/>
             </padding>
-
-            <Button fx:id="lastFileButton" text="Last file" onAction="#lastFile"/>
+            <Button fx:id="lastFileButton" text = "Last file" onAction="#lastFile"/>
             <ListView fx:id="fileListView" />
             <Button fx:id="nextFileButton" text="Next File" onAction="#nextFile"/>
         </HBox>
+        <HBox alignment="BASELINE_CENTER" spacing="40.0" xmlns:fx="http://javafx.com/fxml">
+            <padding>
+                <Insets top="50" bottom="10" right="50" left="30"/>
+            </padding>
+            <Button fx:id="cancelProcessButton" text="Postpone process" onAction="#postponeLoafingProcess"/>
 
+            <padding>
+                <Insets top="50" bottom="10" right="30" left="80"/>
+            </padding>
+
+
+            <Button fx:id="copyButton" text="Copy path" onAction="#copyPath"/>
+        </HBox>
 
     </VBox>
 </AnchorPane>

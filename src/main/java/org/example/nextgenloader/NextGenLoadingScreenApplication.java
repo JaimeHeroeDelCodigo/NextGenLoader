@@ -33,8 +33,8 @@ public class NextGenLoadingScreenApplication extends Application {
     public void start(Stage stage) throws Exception {
 
         FXMLLoader fmxlLoader = new FXMLLoader(NextGenLoadingScreenApplication.class.getResource("loading-view.fxml"));
-        Scene scene = new Scene(fmxlLoader.load(),485,300);
-        //Scene scene = new Scene(fmxlLoader.load());
+
+        Scene scene = new Scene(fmxlLoader.load());
         stage.setScene(scene);
         stage.setResizable(true);
         stage.show();
