@@ -40,6 +40,16 @@ public class LoadingController {
         if (fileNames!=null) {
             ObservableList<String> items =  FXCollections.observableArrayList(fileNames);
             fileListView.setItems(items);
+
+
+
+            //for(String fileName:fileNames) {
+                //workingDirectory
+
+
+            //}
+
+
         }
     }
 
