@@ -8,9 +8,7 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
-import java.io.IOException;
 import static java.nio.file.Files.createDirectory;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -83,7 +81,6 @@ public class HomeController {
             createDirectory(pathDirectoryOutput);
             createControlFile(directory);
 
-
             for (File file:csv_list) {
                 String fileDir = file.getPath();
 
@@ -115,7 +112,7 @@ public class HomeController {
             Optional<ButtonType> confirmation = yesNoPromptAfterLoading("Success", "Configuration Loading completed", "¿Do you want to " +
                     "continue with the loading right now?");
 
-            if (confirmation.isPresent() &&  ButtonType.OK.equals(confirmation.get())){
+            if (confirmation.isPresent() &&  ButtonType.OK.equals(confirmation.get())) {
                 NextGenLoadingScreenApplication app = new  NextGenLoadingScreenApplication(pathDirectoryOutput);
                 Stage stage = new Stage();
                 app.start(stage);
@@ -124,8 +121,6 @@ public class HomeController {
                 Stage stage = new Stage();
                 app.start(stage);
             }
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

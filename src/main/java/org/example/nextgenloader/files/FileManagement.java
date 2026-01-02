@@ -1,11 +1,18 @@
 package org.example.nextgenloader.files;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class FileManagement {
+
+    public static Logger log = LoggerFactory.getLogger(FileManagement.class);
 
     public static final String INGENICO_PHRASE = ",\"IngenicoLane8000\",,,,\"UPP\",\"Ingenico\",\"Lane 8000\",\"SERIAL\",,\"COM9\",";
 
@@ -102,5 +109,29 @@ public class FileManagement {
             return  false;
         }
 
+    }
+
+    public static List<String> getFilesNamesFromControlFile(File control) {
+
+        List<String> names = new ArrayList<>();
+        System.out.println("The file name is : " + control.getName());
+        System.out.println("The file path is : " + control.getAbsolutePath());
+        try {
+            if(control==null || !control.getName().equals("control.txt")) {
+                log.error("File control.txt is not present or has wrong name or format");
+            } else {
+                String currentLine;
+                BufferedReader reader = new BufferedReader(new FileReader(control));
+                while( (currentLine= reader.readLine())!=null) {
+                    names.add(currentLine.trim());
+                }
+                reader.close();
+            }
+            return names;
+
+        } catch(IOException ioe) {
+            log.error("File exception thrown",ioe);
+            return null;
+        }
     }
 }

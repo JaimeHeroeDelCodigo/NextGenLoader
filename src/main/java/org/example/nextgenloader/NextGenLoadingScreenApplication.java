@@ -3,14 +3,11 @@ package org.example.nextgenloader;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.nio.file.Path;
-
-import static org.example.nextgenloader.constants.TextConstants.START_APPLICATION_LOG;
-import static org.example.nextgenloader.constants.TextConstants.START_LEGEND;
 
 public class NextGenLoadingScreenApplication extends Application {
 
@@ -24,7 +21,6 @@ public class NextGenLoadingScreenApplication extends Application {
 
 
     public NextGenLoadingScreenApplication(Path workingDirectory) {
-        this();
         this.workingDirectory = workingDirectory;
     }
 
@@ -34,10 +30,21 @@ public class NextGenLoadingScreenApplication extends Application {
 
         FXMLLoader fmxlLoader = new FXMLLoader(NextGenLoadingScreenApplication.class.getResource("loading-view.fxml"));
 
+        LoadingController controller = new LoadingController(workingDirectory);
+        fmxlLoader.setController(controller);
+
+
+        //AnchorPane root = fmxlLoader.load();
+
+
+
         Scene scene = new Scene(fmxlLoader.load());
+
         stage.setScene(scene);
         stage.setResizable(true);
         stage.show();
+
+
     }
 
 

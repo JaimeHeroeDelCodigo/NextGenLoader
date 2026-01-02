@@ -17,8 +17,9 @@
 <?import javafx.scene.text.Font?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.nextgenloader.LoadingController"
             prefHeight="485.0" prefWidth="300.0">
+        <!--fx:controller="org.example.nextgenloader.LoadingController"-->
+
 
     <VBox alignment="CENTER" spacing="20.0"  xmlns:fx="http://javafx.com/fxml">
         <HBox alignment="TOP_CENTER" maxWidth="Infinity">

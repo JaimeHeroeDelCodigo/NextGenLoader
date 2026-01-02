@@ -4,13 +4,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-import org.controlsfx.control.PropertySheet;
-import org.controlsfx.control.PropertySheet.Item;
-import org.example.nextgenloader.visual.DisplayableItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+
+import static org.example.nextgenloader.files.FileManagement.getFilesNamesFromControlFile;
 
 public class LoadingController {
 
@@ -21,28 +23,29 @@ public class LoadingController {
 
     private Path workingDirectory;
 
-
+    private List<File> files;
 
     public LoadingController(Path workingDirectory) {
         this.workingDirectory = workingDirectory;
     }
 
+    @FXML
     public void initialize() {
+        File controlFile = new File(workingDirectory + "/control.txt");
 
+        List<String> fileNames = getFilesNamesFromControlFile(controlFile);
 
+        System.out.println(fileNames);
 
-        ObservableList<String> items =  FXCollections.observableArrayList("Item 1","Item 2","Item 3","Item 4");
-
-        fileListView.setItems(items);
+        if (fileNames!=null) {
+            ObservableList<String> items =  FXCollections.observableArrayList(fileNames);
+            fileListView.setItems(items);
+        }
     }
 
     public LoadingController() {
         this(Paths.get("C:/"));
     }
-
-
-
-
 
     @FXML
     protected void nextFile() {
