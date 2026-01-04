@@ -3,7 +3,10 @@ package org.example.nextgenloader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +21,12 @@ public class LoadingController {
 
     @FXML
     private ListView<String> fileListView;
+
+
+    @FXML
+    private Label pathLabel;
+
+
 
     public static Logger log = LoggerFactory.getLogger(LoadingController.class);
 
@@ -74,6 +83,11 @@ public class LoadingController {
 
     @FXML
     protected void copyPath() {
+        Clipboard clipboard = Clipboard.getSystemClipboard();
+        ClipboardContent content = new ClipboardContent();
+        content.putString(pathLabel.getText());
+        clipboard.setContent(content);
+
         System.out.println("Copy path");
     }
 
