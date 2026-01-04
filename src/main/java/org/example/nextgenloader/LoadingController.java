@@ -26,8 +26,6 @@ public class LoadingController {
     @FXML
     private Label pathLabel;
 
-
-
     public static Logger log = LoggerFactory.getLogger(LoadingController.class);
 
     private Path workingDirectory;
@@ -50,15 +48,6 @@ public class LoadingController {
             ObservableList<String> items =  FXCollections.observableArrayList(fileNames);
             fileListView.setItems(items);
 
-
-
-            //for(String fileName:fileNames) {
-                //workingDirectory
-
-
-            //}
-
-
         }
     }
 
@@ -68,6 +57,8 @@ public class LoadingController {
 
     @FXML
     protected void nextFile() {
+
+
         System.out.println("Siguiente archivo");
     }
 
@@ -77,7 +68,7 @@ public class LoadingController {
     }
 
     @FXML
-    protected void postponeLoafingProcess() {
+    protected void postponeLoadingProcess() {
         System.out.println("Postpone Loading process");
     }
 
@@ -87,10 +78,5 @@ public class LoadingController {
         ClipboardContent content = new ClipboardContent();
         content.putString(pathLabel.getText());
         clipboard.setContent(content);
-
-        System.out.println("Copy path");
     }
-
-
-
 }

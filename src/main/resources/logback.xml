@@ -1,5 +1,5 @@
 <configuration>
-    <property name="LOG_DIR" value="C:\Users\JAIME\Documents\Bibliografia Computacion\" />
+    <property name="LOG_DIR" value="${user.home}/Documents/"/>
 
     <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR}/nextGenLoaderLogs.log</file>

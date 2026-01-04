@@ -46,7 +46,7 @@
             <padding>
                 <Insets top="50" bottom="10" right="50" left="30"/>
             </padding>
-            <Button fx:id="cancelProcessButton" text="Postpone process" onAction="#postponeLoafingProcess"/>
+            <Button fx:id="cancelProcessButton" text="Postpone process" onAction="#postponeLoadingProcess"/>
 
             <padding>
                 <Insets top="50" bottom="10" right="30" left="80"/>
