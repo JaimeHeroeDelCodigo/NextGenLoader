@@ -29,4 +29,13 @@ public class Alerts {
 
         return yesNoAlert.showAndWait();
     }
+
+
+    public static void finalizeMessage() {
+        Alert finalizeNotification = new Alert(Alert.AlertType.INFORMATION);
+        finalizeNotification.setTitle("You have finished the loading process");
+        finalizeNotification.setHeaderText("Congratulations");
+        finalizeNotification.setContentText("Click OK to exit");
+        finalizeNotification.showAndWait();
+    }
 }

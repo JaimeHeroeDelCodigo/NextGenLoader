@@ -114,13 +114,22 @@ public class FileManagement {
 
 
     public static String  searchPathOfFile(Path outputPath, String fileName) {
-        String path = "";
+        Path searchedFileFolderPath = Paths.get(outputPath.toString().concat("/").concat(fileName));
+        if (Files.exists(searchedFileFolderPath)) {
+            File[] filesInside = searchedFileFolderPath.toFile().listFiles(File::isFile);
+            if (filesInside!=null && filesInside.length==1) {
+                String filePrefix = "INGENICO - " + fileName;
+                String[] nameSegments = filesInside[0].getName().split("_");
 
 
-
-
-
-        return path;
+                if (nameSegments[0].equals(filePrefix) ) {
+                    return searchedFileFolderPath.toString();
+                }
+            }
+        } else {
+            log.error("{} terminal INGENICO-file was not found inside the path {}",fileName,searchedFileFolderPath);
+        }
+        return "";
     }
 
     public static List<String> getFilesNamesFromControlFile(File control) {

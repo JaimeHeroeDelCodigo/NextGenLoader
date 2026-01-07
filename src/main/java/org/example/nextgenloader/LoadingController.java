@@ -20,7 +20,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import static org.example.nextgenloader.alerts.Alerts.finalizeMessage;
 import static org.example.nextgenloader.files.FileManagement.getFilesNamesFromControlFile;
+import static org.example.nextgenloader.files.FileManagement.searchPathOfFile;
 
 public class LoadingController {
 
@@ -29,6 +31,10 @@ public class LoadingController {
 
 
     private ListView<DisplayableItem> testList;
+
+    private Integer listIndex = 0;
+
+    private ObservableList<PropertySheet.Item> fileItems;
 
 
     @FXML
@@ -55,21 +61,16 @@ public class LoadingController {
 
             for (String fileName: fileNames) {
                 DisplayableItem displayableItem = new DisplayableItem(fileName);
+                displayableItem.setDescription(searchPathOfFile(workingDirectory,fileName));
                 items.add(displayableItem);
-
-
-
-
             }
-
-
-            //DisplayableItem displayableItem = new DisplayableItem("Objeto 1");
-            //displayableItem.setDescription("Dir 1");
 
               //fileNames
             fileListView.setItems(items);
 
         }
+
+        fileItems = fileListView.getItems();
     }
 
     public LoadingController() {
@@ -79,17 +80,38 @@ public class LoadingController {
     @FXML
     protected void nextFile() {
 
+        if(listIndex< fileItems.size()) {
+            pathLabel.setText("");
+            pathLabel.setText(fileItems.get(listIndex).getDescription());
 
-       // ObservableList<String> items = fileListView.getItems();
+            fileListView.getSelectionModel().select(listIndex);
+            fileListView.scrollTo(listIndex);
+            listIndex++;
+
+
+        } else {
+            finalizeMessage();
+        }
 
 
 
-        System.out.println("Siguiente archivo");
+
+
     }
 
     @FXML
     protected void lastFile() {
-        System.out.println("Último archivo");
+
+        if(listIndex>0) {
+            listIndex--;
+            pathLabel.setText("");
+            pathLabel.setText(fileItems.get(listIndex).getDescription());
+            fileListView.getSelectionModel().select(listIndex);
+            fileListView.scrollTo(listIndex);
+        }
+
+
+
     }
 
     @FXML
