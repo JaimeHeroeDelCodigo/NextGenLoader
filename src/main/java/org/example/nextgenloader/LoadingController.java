@@ -11,6 +11,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.paint.Color;
 import org.controlsfx.control.PropertySheet;
+import org.example.nextgenloader.visual.DisplayableItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +25,10 @@ import static org.example.nextgenloader.files.FileManagement.getFilesNamesFromCo
 public class LoadingController {
 
     @FXML
-    private ListView<String> fileListView;
+    private ListView<PropertySheet.Item> fileListView;
+
+
+    private ListView<DisplayableItem> testList;
 
 
     @FXML
@@ -46,10 +50,23 @@ public class LoadingController {
 
         List<String> fileNames = getFilesNamesFromControlFile(controlFile);
 
-        System.out.println(fileNames);
-
         if (fileNames!=null) {
-            ObservableList<String> items =  FXCollections.observableArrayList(fileNames);
+            ObservableList<PropertySheet.Item> items =  FXCollections.observableArrayList();
+
+            for (String fileName: fileNames) {
+                DisplayableItem displayableItem = new DisplayableItem(fileName);
+                items.add(displayableItem);
+
+
+
+
+            }
+
+
+            //DisplayableItem displayableItem = new DisplayableItem("Objeto 1");
+            //displayableItem.setDescription("Dir 1");
+
+              //fileNames
             fileListView.setItems(items);
 
         }
@@ -63,7 +80,7 @@ public class LoadingController {
     protected void nextFile() {
 
 
-        ObservableList<String> items = fileListView.getItems();
+       // ObservableList<String> items = fileListView.getItems();
 
 
 

@@ -40,7 +40,7 @@
             <Button fx:id="nextFileButton" text="Next File" onAction="#nextFile"/>
         </HBox>
 
-        <Label fx:id="pathLabel"  textAlignment="JUSTIFY"></Label>
+        <Label fx:id="pathLabel" text="Directorio" textAlignment="JUSTIFY"></Label>
 
         <HBox alignment="BASELINE_CENTER" spacing="40.0" xmlns:fx="http://javafx.com/fxml">
             <padding>
