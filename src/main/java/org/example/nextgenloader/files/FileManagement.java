@@ -15,6 +15,11 @@ public class FileManagement {
 
     public static Logger log = LoggerFactory.getLogger(FileManagement.class);
 
+
+    public static final String CSV_ROLLOUT_HEADER = "\"type\",\"identity\"";
+
+    public static final String CSV_ROLLOUT_CONSTANT_STORE = "\"STORE\",";
+
     public static final String INGENICO_PHRASE = ",\"IngenicoLane8000\",,,,\"UPP\",\"Ingenico\",\"Lane 8000\",\"SERIAL\",,\"COM9\",";
 
     public static final String VERIFONE_PHRASE = ",\"Default\",,,,\"FormAgent\",\"Verifone\",\"MX925\",\"SERIAL\",,\"COM9\",";
@@ -154,5 +159,16 @@ public class FileManagement {
             log.error("File exception thrown",ioe);
             return null;
         }
+    }
+
+    public static boolean rollOutFileCreation(Path path, List<String> fileNames) {
+
+
+
+
+
+
+
+        return false;
     }
 }

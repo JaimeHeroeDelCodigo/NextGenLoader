@@ -21,8 +21,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import static org.example.nextgenloader.alerts.Alerts.finalizeMessage;
-import static org.example.nextgenloader.files.FileManagement.getFilesNamesFromControlFile;
-import static org.example.nextgenloader.files.FileManagement.searchPathOfFile;
+import static org.example.nextgenloader.files.FileManagement.*;
 
 public class LoadingController {
 
@@ -55,6 +54,8 @@ public class LoadingController {
         File controlFile = new File(workingDirectory + "/control.txt");
 
         List<String> fileNames = getFilesNamesFromControlFile(controlFile);
+
+        boolean rollOutFileFlag = rollOutFileCreation(workingDirectory,fileNames);
 
         if (fileNames!=null) {
             ObservableList<PropertySheet.Item> items =  FXCollections.observableArrayList();
