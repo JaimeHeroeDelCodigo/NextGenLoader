@@ -18,7 +18,7 @@ public class FileManagement {
 
     public static final String CSV_ROLLOUT_HEADER = "\"type\",\"identity\"";
 
-    public static final String CSV_ROLLOUT_CONSTANT_STORE = "\"STORE\",";
+    public static final String CSV_ROLLOUT_CONSTANT_STORE = "\"STORE\",\"";
 
     public static final String INGENICO_PHRASE = ",\"IngenicoLane8000\",,,,\"UPP\",\"Ingenico\",\"Lane 8000\",\"SERIAL\",,\"COM9\",";
 
@@ -165,19 +165,16 @@ public class FileManagement {
 
         File csvFile = new File(path.toString() + "/rollout_group.csv");
         Files.createFile(csvFile.toPath());
+        BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile));
+        writer.write(CSV_ROLLOUT_HEADER);
 
-
-        System.out.println("CSV ROLLOUT FILE PATH:");
-        System.out.println(csvFile);
-
-
-
-
-
-
-
-
-
+        for (String fileName:fileNames) {
+            writer.write("\n");
+            writer.write(CSV_ROLLOUT_CONSTANT_STORE);
+            writer.write(fileName);
+            writer.write("\"");
+        }
+        writer.close();
         return false;
     }
 }
