@@ -161,7 +161,16 @@ public class FileManagement {
         }
     }
 
-    public static boolean rollOutFileCreation(Path path, List<String> fileNames) {
+    public static boolean rollOutFileCreation(Path path, List<String> fileNames) throws IOException {
+
+        File csvFile = new File(path.toString() + "/rollout_group.csv");
+        Files.createFile(csvFile.toPath());
+
+
+        System.out.println("CSV ROLLOUT FILE PATH:");
+        System.out.println(csvFile);
+
+
 
 
 

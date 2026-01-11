@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -50,7 +51,7 @@ public class LoadingController {
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
         File controlFile = new File(workingDirectory + "/control.txt");
 
         List<String> fileNames = getFilesNamesFromControlFile(controlFile);
