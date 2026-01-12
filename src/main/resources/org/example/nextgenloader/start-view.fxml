@@ -28,5 +28,5 @@
 
   <Label fx:id="welcomeText"/>
   <Button fx:id="openFileButton" text="Load new configuration" onAction="#openFileExplorerClick"/>
-  <Button text="Continue existing loading" />
+  <Button fx:id="postponeProcessButton" text="Continue existing loading" onAction="#continueLoadingExplorerClick"/>
 </VBox>

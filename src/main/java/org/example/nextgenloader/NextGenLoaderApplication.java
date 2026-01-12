@@ -19,7 +19,9 @@ public class NextGenLoaderApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException, InterruptedException {
         FXMLLoader fxmlLoader = new FXMLLoader(NextGenLoaderApplication.class.getResource("start-view.fxml"));
+
         Scene scene = new Scene(fxmlLoader.load(), 760 , 470);
+
         stage.setTitle("NextGenLoader");
         stage.setScene(scene);
         stage.setResizable(false);
@@ -28,7 +30,7 @@ public class NextGenLoaderApplication extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         Application.launch(NextGenLoaderApplication.class);
     }
 }

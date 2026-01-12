@@ -1,5 +1,8 @@
 package org.example.nextgenloader.files;
 
+import javafx.collections.ObservableList;
+import org.controlsfx.control.PropertySheet;
+import org.example.nextgenloader.visual.DisplayableItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,6 +10,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -114,6 +118,29 @@ public class FileManagement {
         } else {
             return  false;
         }
+    }
+
+    public static String searchCurrentWorkingFile(File control) {
+        try {
+            if(control==null || !control.getName().equals("control.txt")) {
+                log.error("File control.txt is not present or has wrong name or format");
+            } else {
+                String currentLine;
+                BufferedReader reader = new BufferedReader(new FileReader(control));
+                while((currentLine= reader.readLine())!=null) {
+                    String[] trace = currentLine.split(" ");
+                    if(trace.length==2 && "X".equals(trace[1])) {
+                        return trace[0];
+                    }
+                }
+                reader.close();
+            }
+            return "";
+        } catch(IOException ioe) {
+            log.error("File exception thrown",ioe);
+            return "";
+        }
+
 
     }
 
@@ -142,6 +169,7 @@ public class FileManagement {
         List<String> names = new ArrayList<>();
         System.out.println("The file name is : " + control.getName());
         System.out.println("The file path is : " + control.getAbsolutePath());
+        String fileNameToBeAdded;
         try {
             if(control==null || !control.getName().equals("control.txt")) {
                 log.error("File control.txt is not present or has wrong name or format");
@@ -149,7 +177,8 @@ public class FileManagement {
                 String currentLine;
                 BufferedReader reader = new BufferedReader(new FileReader(control));
                 while( (currentLine= reader.readLine())!=null) {
-                    names.add(currentLine.trim());
+                    fileNameToBeAdded = currentLine.split(" ")[0];
+                    names.add(fileNameToBeAdded.trim());
                 }
                 reader.close();
             }
@@ -176,5 +205,37 @@ public class FileManagement {
         }
         writer.close();
         return false;
+    }
+
+    public static void saveLoadingForLater(List<String> fileNames,File controlFile, String currentFileName)  {
+
+        File newControlFile = new File(controlFile.toPath().toString());
+
+        try(
+             BufferedWriter writer = new BufferedWriter(new FileWriter(newControlFile))) {
+
+            writer.write("");
+
+            for (String fileName: fileNames) {
+                writer.write(fileName);
+                if(fileName.equals(currentFileName) ) {
+                    writer.write(" X");
+                }
+                if( fileNames.indexOf(fileName)!= fileNames.size()-1) {
+                    writer.write("\n");
+                }
+            }
+        } catch(IOException e) {
+            log.error("IOException",e);
+        }
+    }
+
+    public static int searchPendingIndex (ObservableList<PropertySheet.Item> viewList, String fileName ) {
+        for (PropertySheet.Item item :viewList) {
+            if(fileName.equals(item.getName())) {
+                return viewList.indexOf(item);
+            }
+        }
+        return -1;
     }
 }

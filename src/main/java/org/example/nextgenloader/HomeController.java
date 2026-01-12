@@ -31,6 +31,30 @@ public class HomeController {
     private Integer numberOFiles;
 
     @FXML
+    private Button postponeProcessButton;
+
+
+    @FXML
+    protected void continueLoadingExplorerClick() throws Exception {
+
+        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        System.out.println("Continue pending loading process");
+
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select a directory");
+        File selectedDirectory = directoryChooser.showDialog(null);
+
+
+        if(selectedDirectory!=null &&  Files.exists( Paths.get(selectedDirectory.toString() + "/control.txt"))) {
+            NextGenLoadingScreenApplication app = new  NextGenLoadingScreenApplication(Paths.get(selectedDirectory.toString()));
+            Stage LoadingStage = new Stage();
+            Stage mainStage = (Stage) postponeProcessButton.getScene().getWindow();
+            mainStage.close();
+            app.start(LoadingStage);
+        }
+    }
+
+    @FXML
     protected void openFileExplorerClick(ActionEvent actionEvent) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select a directory");

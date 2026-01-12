@@ -45,8 +45,6 @@
             <padding>
                 <Insets top="50" bottom="10" right="30" left="80"/>
             </padding>
-
-
             <Button fx:id="copyButton" text="Copy path" onAction="#copyPath"/>
         </HBox>
 

@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -36,6 +37,10 @@ public class LoadingController {
 
     private ObservableList<PropertySheet.Item> fileItems;
 
+    private String currentFile;
+
+    private File controlFile;
+
     @FXML
     private Label pathLabel;
 
@@ -46,12 +51,13 @@ public class LoadingController {
 
     private final ClipboardContent clipboardContent = new ClipboardContent();
 
-
-
-
     public static Logger log = LoggerFactory.getLogger(LoadingController.class);
 
     private Path workingDirectory;
+
+
+    private List<String> fileNames;
+
 
     public LoadingController(Path workingDirectory) {
         this.workingDirectory = workingDirectory;
@@ -59,15 +65,17 @@ public class LoadingController {
 
     @FXML
     public void initialize() throws IOException {
-        File controlFile = new File(workingDirectory + "/control.txt");
+        this.controlFile = new File(workingDirectory + "/control.txt");
+        fileNames = getFilesNamesFromControlFile(controlFile);
 
-        List<String> fileNames = getFilesNamesFromControlFile(controlFile);
+        if(!Files.exists(Paths.get(workingDirectory.toString() + "/rollout_group.csv"))) {
+            boolean rollOutFileFlag = rollOutFileCreation(workingDirectory,fileNames);
+        }
 
-        boolean rollOutFileFlag = rollOutFileCreation(workingDirectory,fileNames);
+        currentFile = searchCurrentWorkingFile(controlFile);
+        ObservableList<PropertySheet.Item> items =  FXCollections.observableArrayList();
 
         if (fileNames!=null) {
-            ObservableList<PropertySheet.Item> items =  FXCollections.observableArrayList();
-
             for (String fileName: fileNames) {
                 DisplayableItem displayableItem = new DisplayableItem(fileName);
                 displayableItem.setDescription(searchPathOfFile(workingDirectory,fileName));
@@ -76,7 +84,27 @@ public class LoadingController {
             fileListView.setItems(items);
         }
         fileItems = fileListView.getItems();
+
+        if(!currentFile.isEmpty()) {
+            int pendingIndex = searchPendingIndex(items,currentFile);
+            listIndex = pendingIndex;
+            fileListView.getSelectionModel().select(pendingIndex);
+            fileListView.scrollTo(pendingIndex);
+            pathLabel.setText(fileItems.get(pendingIndex).getDescription());
+            clipboardContent.clear();
+            clipboardContent.putString(currentFile);
+            clipboard.setContent(clipboardContent);
+        } else {
+            fileListView.getSelectionModel().select(listIndex);
+            fileListView.scrollTo(listIndex);
+            pathLabel.setText(fileItems.get(listIndex).getDescription());
+            clipboardContent.clear();
+            clipboardContent.putString(fileItems.get(listIndex).getName() );
+            clipboard.setContent(clipboardContent);
+        }
+
     }
+
 
     public LoadingController() {
         this(Paths.get("C:/"));
@@ -85,7 +113,7 @@ public class LoadingController {
     @FXML
     protected void nextFile() {
 
-        if(listIndex< fileItems.size()) {
+        if(listIndex<fileItems.size()-1) {
 
             listIndex++;
             pathLabel.setText("");
@@ -121,10 +149,17 @@ public class LoadingController {
     }
 
     @FXML
-    protected void postponeLoadingProcess() throws Exception {
+    protected void postponeLoadingProcess() throws Throwable {
+
+        currentFile = fileListView.getItems().get(listIndex).getName();
+
+        saveLoadingForLater(this.fileNames,this.controlFile,currentFile);
 
         Stage sourceStage = (Stage) postponeProcessButton.getScene().getWindow();
+
         sourceStage.close();
+
+
         NextGenLoaderApplication app = new NextGenLoaderApplication();
         Stage stage = new Stage();
         app.start(stage);
