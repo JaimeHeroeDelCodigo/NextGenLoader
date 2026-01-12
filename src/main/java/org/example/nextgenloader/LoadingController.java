@@ -3,12 +3,10 @@ package org.example.nextgenloader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.effect.DropShadow;
+
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 
@@ -52,8 +50,6 @@ public class LoadingController {
     public static Logger log = LoggerFactory.getLogger(LoadingController.class);
 
     private Path workingDirectory;
-
-    private List<File> files;
 
     public LoadingController(Path workingDirectory) {
         this.workingDirectory = workingDirectory;
