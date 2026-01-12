@@ -7,7 +7,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            prefHeight="485.0" prefWidth="300.0">
+            prefHeight="500.0" prefWidth="805.0">
         <!--fx:controller="org.example.nextgenloader.LoadingController"-->
 
 
@@ -25,10 +25,14 @@
             <padding>
                 <Insets top="10" bottom="10" right="10" left="10"/>
             </padding>
-            <Button fx:id="lastFileButton" text = "Previous" onAction="#lastFile"/>
+            <Button fx:id="lastFileButton" text = "Previous" onAction="#previousFile"/>
             <ListView fx:id="fileListView" />
             <Button fx:id="nextFileButton" text="Next" onAction="#nextFile"/>
         </HBox>
+
+        <padding>
+            <Insets top="50" bottom="20" right="50" left="30"/>
+        </padding>
 
         <Label fx:id="pathLabel" textAlignment="JUSTIFY"></Label>
 
@@ -36,7 +40,7 @@
             <padding>
                 <Insets top="50" bottom="10" right="50" left="30"/>
             </padding>
-            <Button fx:id="cancelProcessButton" text="Postpone process" onAction="#postponeLoadingProcess"/>
+            <Button fx:id="postponeProcessButton" text="Postpone process" onAction="#postponeLoadingProcess"/>
 
             <padding>
                 <Insets top="50" bottom="10" right="30" left="80"/>

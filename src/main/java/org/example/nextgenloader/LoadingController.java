@@ -3,13 +3,16 @@ package org.example.nextgenloader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.paint.Color;
+
+import javafx.stage.Stage;
 import org.controlsfx.control.PropertySheet;
 import org.example.nextgenloader.visual.DisplayableItem;
 import org.slf4j.Logger;
@@ -36,9 +39,15 @@ public class LoadingController {
 
     private ObservableList<PropertySheet.Item> fileItems;
 
-
     @FXML
     private Label pathLabel;
+
+    @FXML
+    private Button postponeProcessButton;
+
+    private Clipboard clipboard = Clipboard.getSystemClipboard();
+
+    private final ClipboardContent clipboardContent = new ClipboardContent();
 
     public static Logger log = LoggerFactory.getLogger(LoadingController.class);
 
@@ -66,12 +75,8 @@ public class LoadingController {
                 displayableItem.setDescription(searchPathOfFile(workingDirectory,fileName));
                 items.add(displayableItem);
             }
-
-              //fileNames
             fileListView.setItems(items);
-
         }
-
         fileItems = fileListView.getItems();
     }
 
@@ -83,26 +88,34 @@ public class LoadingController {
     protected void nextFile() {
 
         if(listIndex< fileItems.size()) {
-            pathLabel.setText("");
-            pathLabel.setText(fileItems.get(listIndex).getDescription());
 
-            fileListView.getSelectionModel().select(listIndex);
-            fileListView.scrollTo(listIndex);
             listIndex++;
 
+
+            pathLabel.setText("");
+            pathLabel.setText(fileItems.get(listIndex).getDescription());
+            fileListView.getSelectionModel().select(listIndex);
+            fileListView.scrollTo(listIndex);
+
+
+            clipboard.clear();
+
+
+            String fileName = fileItems.get(listIndex).getName();
+
+            clipboardContent.putString(fileName);
+            clipboard.setContent(clipboardContent);
+
+
+            //listIndex++;
 
         } else {
             finalizeMessage();
         }
-
-
-
-
-
     }
 
     @FXML
-    protected void lastFile() {
+    protected void previousFile() {
 
         if(listIndex>0) {
             listIndex--;
@@ -110,6 +123,12 @@ public class LoadingController {
             pathLabel.setText(fileItems.get(listIndex).getDescription());
             fileListView.getSelectionModel().select(listIndex);
             fileListView.scrollTo(listIndex);
+
+
+            String fileName = fileItems.get(listIndex).getName();
+
+            clipboardContent.putString(fileName);
+            clipboard.setContent(clipboardContent);
         }
 
 
@@ -117,13 +136,18 @@ public class LoadingController {
     }
 
     @FXML
-    protected void postponeLoadingProcess() {
-        System.out.println("Postpone Loading process");
+    protected void postponeLoadingProcess() throws Exception {
+
+        Stage sourceStage = (Stage) postponeProcessButton.getScene().getWindow();
+        sourceStage.close();
+        NextGenLoaderApplication app = new NextGenLoaderApplication();
+        Stage stage = new Stage();
+        app.start(stage);
     }
 
     @FXML
     protected void copyPath() {
-        Clipboard clipboard = Clipboard.getSystemClipboard();
+
         ClipboardContent content = new ClipboardContent();
         content.putString(pathLabel.getText());
         clipboard.setContent(content);
