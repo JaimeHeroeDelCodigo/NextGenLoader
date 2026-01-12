@@ -30,7 +30,6 @@ public class LoadingController {
     @FXML
     private ListView<PropertySheet.Item> fileListView;
 
-
     private ListView<DisplayableItem> testList;
 
     private Integer listIndex = 0;
@@ -46,6 +45,9 @@ public class LoadingController {
     private Clipboard clipboard = Clipboard.getSystemClipboard();
 
     private final ClipboardContent clipboardContent = new ClipboardContent();
+
+
+
 
     public static Logger log = LoggerFactory.getLogger(LoadingController.class);
 
@@ -86,24 +88,15 @@ public class LoadingController {
         if(listIndex< fileItems.size()) {
 
             listIndex++;
-
-
             pathLabel.setText("");
             pathLabel.setText(fileItems.get(listIndex).getDescription());
             fileListView.getSelectionModel().select(listIndex);
             fileListView.scrollTo(listIndex);
 
-
             clipboard.clear();
-
-
             String fileName = fileItems.get(listIndex).getName();
-
             clipboardContent.putString(fileName);
             clipboard.setContent(clipboardContent);
-
-
-            //listIndex++;
 
         } else {
             finalizeMessage();
@@ -120,15 +113,11 @@ public class LoadingController {
             fileListView.getSelectionModel().select(listIndex);
             fileListView.scrollTo(listIndex);
 
-
             String fileName = fileItems.get(listIndex).getName();
 
             clipboardContent.putString(fileName);
             clipboard.setContent(clipboardContent);
         }
-
-
-
     }
 
     @FXML
@@ -143,9 +132,8 @@ public class LoadingController {
 
     @FXML
     protected void copyPath() {
-
-        ClipboardContent content = new ClipboardContent();
-        content.putString(pathLabel.getText());
-        clipboard.setContent(content);
+        clipboardContent.clear();
+        clipboardContent.putString(pathLabel.getText());
+        clipboard.setContent(clipboardContent);
     }
 }
