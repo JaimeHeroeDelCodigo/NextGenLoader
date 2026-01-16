@@ -31,9 +31,12 @@ public class NextGenLoadingScreenApplication extends Application {
 
         LoadingController controller = new LoadingController(workingDirectory);
         fmxlLoader.setController(controller);
+
         Scene scene = new Scene(fmxlLoader.load());
         stage.setScene(scene);
         stage.setResizable(true);
+        stage.setOnCloseRequest(event -> controller.postponeLoadingProcess());
+
         stage.show();
     }
 }

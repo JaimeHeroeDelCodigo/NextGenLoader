@@ -126,7 +126,7 @@ public class HomeController {
 
                 Files.copy(fileDirPath, tenderNumberINGENICODirPath.resolveSibling("INGENICO - " + file.getName()));
 
-                fileProcessing(new File(tenderNumberDir + "/" +   "INGENICO - " + file.getName()));
+                fileProcessing(new File(tenderNumberDir + "/" +   "INGENICO - " + file.getName()),tenderNumber );
 
                 File control = new File(directoryOutput + "/control.txt");
 
@@ -146,6 +146,8 @@ public class HomeController {
                 app.start(stage);
             }
         } catch (Exception e) {
+            throw new RuntimeException(e);
+        } catch (Throwable e) {
             throw new RuntimeException(e);
         }
     }

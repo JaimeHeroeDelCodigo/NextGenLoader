@@ -28,6 +28,8 @@ public class FileManagement {
 
     public static final String VERIFONE_PHRASE = ",\"Default\",,,,\"FormAgent\",\"Verifone\",\"MX925\",\"SERIAL\",,\"COM9\",";
 
+    public static final String CSV_FILE_HEADER = "\"store_name\",\"tid\",\"terminal_profile\",\"merchant_id\",\"merchant_type\",\"short_name\",\"device_application\",\"manufacturer\",\"model\",\"type\",\"host\",\"port\",\"serial_number\"";
+
     static public boolean validFiles(File[] files) {
         for(File file:files) {
             if(!file.getName().endsWith(".csv") ) {
@@ -61,7 +63,7 @@ public class FileManagement {
             Files.write(Paths.get(controlFile.getPath()) ,tenderNumberToRegister.getBytes());
     }
 
-    public static boolean fileProcessing(File file) throws IOException {
+    public static boolean fileProcessing(File file,String terminalNumber) throws IOException {
 
         String pathTempFile = Paths.get(file.getParent()) + "/tempFile.csv";
 
@@ -77,13 +79,20 @@ public class FileManagement {
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
 
+
+        // terminalChecker
         String currentLine;
+        writer.write(CSV_FILE_HEADER);
+        writer.write("\n");
         while((currentLine = reader.readLine()) !=null) {
-            if (currentLine.contains(VERIFONE_PHRASE)) {
-                currentLine = currentLine.replace(VERIFONE_PHRASE,INGENICO_PHRASE);
+            if(terminalChecker(currentLine,terminalNumber)) {
+                if (currentLine.contains(VERIFONE_PHRASE)) {
+                    currentLine = currentLine.replace(VERIFONE_PHRASE,INGENICO_PHRASE);
+                }
+                writer.write(currentLine);
+                writer.write("\n");
+
             }
-            writer.write(currentLine);
-            writer.write("\n");
         }
         writer.close();
         reader.close();
@@ -237,5 +246,12 @@ public class FileManagement {
             }
         }
         return -1;
+    }
+
+
+    public static boolean terminalChecker(String line,String terminalNumber) {
+        String[] values = line.split(",");
+        String numberInLine = values[0].replace("\"","");
+        return numberInLine.equals(terminalNumber);
     }
 }

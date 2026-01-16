@@ -45,6 +45,9 @@ public class LoadingController {
     private Label pathLabel;
 
     @FXML
+    private Button nextFileButton;
+
+    @FXML
     private Button postponeProcessButton;
 
     private Clipboard clipboard = Clipboard.getSystemClipboard();
@@ -111,7 +114,7 @@ public class LoadingController {
     }
 
     @FXML
-    protected void nextFile() {
+    protected void nextFile() throws IOException {
 
         if(listIndex<fileItems.size()-1) {
 
@@ -128,6 +131,13 @@ public class LoadingController {
 
         } else {
             finalizeMessage();
+
+            Stage sourceStage = (Stage) nextFileButton.getScene().getWindow();
+            sourceStage.close();
+            NextGenLoaderApplication app = new NextGenLoaderApplication();
+            Stage stage = new Stage();
+            app.start(stage);
+
         }
     }
 
@@ -149,20 +159,26 @@ public class LoadingController {
     }
 
     @FXML
-    protected void postponeLoadingProcess() throws Throwable {
+    public void postponeLoadingProcess()  {
 
-        currentFile = fileListView.getItems().get(listIndex).getName();
+        try {
+            currentFile = fileListView.getItems().get(listIndex).getName();
 
-        saveLoadingForLater(this.fileNames,this.controlFile,currentFile);
+            saveLoadingForLater(this.fileNames,this.controlFile,currentFile);
 
-        Stage sourceStage = (Stage) postponeProcessButton.getScene().getWindow();
+            Stage sourceStage = (Stage) postponeProcessButton.getScene().getWindow();
 
-        sourceStage.close();
+            sourceStage.close();
 
 
-        NextGenLoaderApplication app = new NextGenLoaderApplication();
-        Stage stage = new Stage();
-        app.start(stage);
+            NextGenLoaderApplication app = new NextGenLoaderApplication();
+            Stage stage = new Stage();
+            app.start(stage);
+
+        } catch(Throwable t) {
+            log.error("Throwable caught from loading controller.",t);
+        }
+
     }
 
     @FXML
