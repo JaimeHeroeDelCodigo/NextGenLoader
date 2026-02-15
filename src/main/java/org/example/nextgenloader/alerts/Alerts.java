@@ -3,10 +3,12 @@ package org.example.nextgenloader.alerts;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import static javafx.application.Application.launch;
 import static javafx.scene.control.Alert.AlertType.CONFIRMATION;
+import static javafx.scene.control.Alert.AlertType.WARNING;
 
 
 public class Alerts {
@@ -22,11 +24,18 @@ public class Alerts {
     public static Optional<ButtonType> yesNoPromptAfterLoading(String title,String header,String content) {
 
         Alert yesNoAlert = new Alert(CONFIRMATION);
-
         yesNoAlert.setTitle(title);
         yesNoAlert.setHeaderText(header);
         yesNoAlert.setContentText(content);
 
+        return yesNoAlert.showAndWait();
+    }
+
+    public static Optional<ButtonType> yesNoPromptAfterLoadingWithWarnings(String title,String header,String content,String... values) {
+        Alert yesNoAlert = new Alert(WARNING);
+        yesNoAlert.setTitle(title);
+        yesNoAlert.setHeaderText(header);
+        yesNoAlert.setContentText(content + "\n" + Arrays.toString(values));
         return yesNoAlert.showAndWait();
     }
 

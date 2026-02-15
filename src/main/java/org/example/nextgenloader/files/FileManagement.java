@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static java.nio.file.Files.createDirectory;
+import static org.example.nextgenloader.alerts.Alerts.errorAlertGenerator;
+
 public class FileManagement {
 
     public static Logger log = LoggerFactory.getLogger(FileManagement.class);
@@ -29,6 +32,18 @@ public class FileManagement {
     public static final String VERIFONE_PHRASE = ",\"Default\",,,,\"FormAgent\",\"Verifone\",\"MX925\",\"SERIAL\",,\"COM9\",";
 
     public static final String CSV_FILE_HEADER = "\"store_name\",\"tid\",\"terminal_profile\",\"merchant_id\",\"merchant_type\",\"short_name\",\"device_application\",\"manufacturer\",\"model\",\"type\",\"host\",\"port\",\"serial_number\"";
+
+
+    static public void createDir(String directory) {
+        try {
+            Path pathDirectoryOutput = Paths.get(directory);
+            createDirectory(pathDirectoryOutput);
+        } catch(IOException ioe) {
+            errorAlertGenerator("Directory Error","Error at folder creation", "Error at creating " +
+                    "the directory " + directory);
+        }
+    }
+
 
     static public boolean validFiles(File[] files) {
         for(File file:files) {
@@ -91,7 +106,6 @@ public class FileManagement {
                 }
                 writer.write(currentLine);
                 writer.write("\n");
-
             }
         }
         writer.close();
